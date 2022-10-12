@@ -218,7 +218,7 @@ function timeUpdates(ct) {
     let ta = au.currentTime;
 
     //Here i am using if condition because there will always be some minute delay in audio and video so if i dont use this condition then at every interval it will keep correcting audio time and a glitch sound can be heard at every interval .................................
-    if ((tv - ta) > (0.2) || (tv - ta) < (-0.2)) {
+    if ((tv - ta) > (0.4) || (tv - ta) < (-0.4)) {
         au.currentTime = ct.currentTime;
     }
     // in place of ct.currentTime we can also use vd.currentTime;
