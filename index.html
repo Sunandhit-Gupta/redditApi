@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>redditApiUsed</title>
+    <!-- Font Styles imported -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        </style>
+        
+</head>
+<link rel="stylesheet" href="style.css">
+
+<body id="bdy">
+
+    <div class="content" id="content">
+        <div class="videoDiv">
+            <h5 class="vidHr">Videos will be shown Here</h5>
+            <hr>
+            <!-- video added -->
+            <video controls ontimeupdate="timeUpdates(this)" id="ck" class="ck" preload="auto" loop>
+                <source id="jp" type="video/mp4" src=''>
+            </video>
+
+            <!-- audio added in video format -->
+            <video height="0" , width="0" controls id="au" class="au" preload="auto" loop>
+                <source id="ausrc" type="video/mp4" src=''>
+            </video>
+
+            <div class="vidAaT" id="vidAaT">
+                <span class="vidAuthor" id="vidAuthor"></span>
+                <span class="vidTitle" id="vidTitle"></span>
+            </div>
+            <!------------------- Like showing Button----------- -->
+            <div class="vidBtns">
+                <a href="" id="vidLikeHref" class="vidLikeHref" target="_blank"><button class="vidLike" id="vidLike"></button></a>
+            </div>
+        </div>
+
+
+        <div class="imageDiv" id="imageDiv">
+            <h5 class="imgHr">Images will be shown Here</h5>
+            <hr>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="btns">
+
+        <button class="back" id="back" onclick="clickedBack()">BACK</button>
+        <button id="mut" class="mut">mute</button>
+        <input type="range" id="Volume" min="0" max="1" step=".01" value=".5" oninput="changeVol(this.value)" />   
+        <button class="memeNo" id="memeNo"></button>
+        <button id="nxt" class="nxt" onclick="clickedNxt()">NEXT</button>
+
+
+        <!--                        Form for subredditName                              -->
+        <form id="form" class="form">
+            <input type="text" placeholder="subredditName Eg: india" id="inpt"  class="inpt">
+            <input type="submit" value="Search" class="goTo">
+            <span id="redditName" class="redditName"></span>
+        </form>
+
+
+        <!--                           Form for MemeNo Jump                        -->
+        <form id="form2" class="form2">
+
+            <input type="number" placeholder="MemeNo" id="inptNo" class = "inptNo" max="101" min="0" required = "required" class="inptNo">
+            <input type="submit" value="JUMP" class="jump">
+            Sunandhit Gupta
+        </form>
+
+    </div>
+    <!--                                GIF for Loading                                 -->
+    <div class="loadingDiv">
+        <img src="" id="loadingGif" class="loadingGif">
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

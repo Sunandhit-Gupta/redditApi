@@ -1,0 +1,188 @@
+*{
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+.content{
+    display: flex;
+    background-color: black;
+    width: 100vw;
+    height: 89vh;
+}
+
+.videoDiv{
+
+    border: 1px ;
+    border-style: solid;
+    border-color: rgb(146, 197, 243);
+    width: 50vw;
+    text-align: center;
+}
+.vidHr{
+    color: aliceblue;
+}
+.ck{
+    margin-top: 4px;
+    height: 60vh;
+    width: 40vw;
+    background-color: black;
+} 
+
+.vidAuthor{
+    color: grey;
+   
+}
+.vidLike{
+    margin: 5px;
+    background-color: hotpink;
+    padding: 4px;
+    border-color: hotpink;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.vidTitle{
+    color: azure;
+    font-weight: bolder;
+    font-family: 'Dancing Script', cursive;
+    user-select: text;
+}
+.imageDiv{
+    width: 50vw;
+    border: 1px;
+    border-left: 0px;
+    border-right: 1px;
+    border-style: solid;
+    border-color: rgb(146, 197, 243);
+    text-align: center;
+   
+}
+.imgHr{
+    color: aliceblue;
+}
+.imge{
+    height: 60vh;
+    width: 48vw;
+    color: rgb(223, 71, 71);
+    background-color: black;
+    margin-top: 4px;
+
+}
+.imgAuthor{
+    color: grey;
+   
+   
+}
+.imgLike{
+    margin: 5px;
+    background-color: hotpink;
+    padding: 4px;
+    border-color: hotpink;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.imgTitle{
+    color:azure;
+    font-weight: bolder;
+    font-family: 'Dancing Script', cursive;
+    user-select: text;
+}
+/* -----------------------------------Buttons ------------------------------------ */
+.btns{
+    text-align: center;
+    height: 4.7vh;
+    width: 100vw;
+}
+.back{
+    background-color: pink;
+    border-radius: 10px;
+    padding: 2px;
+    cursor: pointer;
+}
+.back:active {
+    background-color: #666866;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+  }
+  .mut{
+    background-color: aquamarine;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 2px;
+  }
+  .mut:active {
+    background-color: #6e93c7;
+    box-shadow: 0 5px #666;
+    transform: translateY(0.5px);
+  }
+  .memeNo{
+    font-size: x-small;
+    pointer-events: none;
+  }
+.nxt{
+    background-color: pink;
+    border-radius: 10px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.nxt:active {
+    background-color: #666866;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+  }
+  /* --------------------------------Gif loading--------------------------------- */
+.loadingDiv{
+    text-align: center;
+    margin-top: 0;
+    padding-top: 0;
+
+}
+/*-------------------------------------- Forms -------------------------- */
+.form{
+    text-align: center;
+}
+.inpt{
+    border-width: 2px;
+    border-color: orange;
+}
+.goTo{
+    border-radius: 5px;
+    padding: 2px;
+    background-color: orange;
+    cursor: pointer;
+}
+.goTo:active {
+    background-color: #666866;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+  }
+.redditName{
+    text-align: center;
+    font-size: x-small;
+    font-weight: bolder;
+}
+
+.form2{
+    font-size:xx-small;
+    font-style: italic;
+}
+.inptNo{
+    border-width: 2px;
+    border-color: green;
+}
+.jump{
+    border-radius: 5px;
+    padding: 2px;
+    background-color: green;
+    cursor: pointer;
+
+}
+.jump:active {
+    background-color: #666866;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+  }
+.loadingGif{
+    /* changing height and width of Gif here will have no effect because i have defined them in javascript */
+    text-align: center;
+}
