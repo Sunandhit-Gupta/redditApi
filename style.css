@@ -117,6 +117,11 @@
   .memeNo{
     font-size: x-small;
     pointer-events: none;
+    border: none;
+    border-radius: 4px;
+    padding: 1px;
+    border-color: aliceblue;
+    background-color: aliceblue;
   }
 .nxt{
     background-color: pink;
@@ -166,6 +171,17 @@
     font-size:xx-small;
     font-style: italic;
 }
+.shareBtn{
+    border-radius: 20px;
+    padding: 2px;
+    background-color: rgb(68, 113, 218);
+    
+}
+.shareBtn:active {
+    background-color: #c7cfc7;
+    box-shadow: 0 5px #666;
+    transform: translateY(1px);
+  }
 .inptNo{
     border-width: 2px;
     border-color: green;

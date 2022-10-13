@@ -1,13 +1,44 @@
 
 let i = 0;
+// K variabe is made so that the sharedPostId condition to search from url ,works only once and donot work after clicking next button again ------------
+let k = 0;
 let currenti = 0;
 let currentSubreddit = 'dankindianmemes'
 let subreddit = 'dankindianmemes';
+var sharedPostId;
+var postId;
 
 // Variable r is used to detect whether the image content is loading for the first time or it has alread loaded once .If it is already loaded once then we use 'replaceChild' rather than 'appendChild';
 
 let r = false;
 // -----------------------------------------------------------------------------------------------
+// Getting URL details  in javascript :-------
+getUrlParams();
+
+function getUrlParams() {
+    const keys = window.location.search;
+    const parameters = new URLSearchParams(keys);
+
+    const reddit = parameters.get('reddit');
+    const no = parameters.get('no');
+
+    // Adding sharedPostId and searching of same id to find the updated index of the same post which was shared hours ago ------------------>
+    sharedPostId = parameters.get('id');
+    console.log(reddit);
+    console.log(no);
+
+    if (reddit != null) {
+        subreddit = reddit;
+    };
+
+    if (no != null && sharedPostId == null) {
+        i = parseInt(no);
+    };
+    getVideo();
+}
+
+
+// ---------------------------------------------------------------------------------------
 
 function getVideo() {
     apiUrl = `https://www.reddit.com/r/${subreddit}.json?limit=100`;
@@ -20,144 +51,134 @@ function getVideo() {
 
     fetch(apiUrl, { method: 'GET' }).then(response => response.json()).
         then(response => {
-              console.log(response)
-            console.log(i);
-            //  console.log(response.data.children[0].data.media.reddit_video.fallback_url)
-            let video = response.data.children[i].data.media.reddit_video.fallback_url;
-            let originalPostvid = response.data.children[i].data.permalink;
-            //  console.log(video);
-            audio = video.slice(0, 37) + "audio.mp4";
-            //  console.log('audio :'+ audio);
-            //  console.log(i);
-            vd = document.getElementById('ck');
-            source = document.getElementById('jp');
-            source.setAttribute('src', video);
-            au = document.getElementById('au');
-            source = document.getElementById('ausrc');
-            source.setAttribute('src', audio);
-            vd.load();
-            au.load();
-            // Removing Loading Icon after loading Video----------------------------------
-            loadGif.src = '';
-            loadGif.style.height = '0px';
-            loadGif.style.width = '0px';
+            // K value is used to ensure that this "if" statement works only once .
+            if (sharedPostId != null && k == 0) {
+                indexId = response.data.children.findIndex(z => z.data.id === sharedPostId);
+                i = indexId;
+                k++;
+            }
+            // Changing the URL query to empty so that the URL looks clean :--------------->
+            window.history.pushState({}, '', window.location.pathname);
+            // --------       --Getting info about the type o content -------------------------->
+            contentTypeVideo = response.data.children[i].data.is_video;
+            if (contentTypeVideo == true) {
 
-            // Linking AudioPlayback with Video---------------------------------
-            vd.onpause = () => au.pause();
-            vd.onplay = () => au.play();
-            mut = document.getElementById('mut');
-
-            // Adding Likes and Title and Author for vdieo:--------------------------------------------
-            let vidAuthor = response.data.children[i].data.author;
-            let vidTitle = response.data.children[i].data.title;
-            let vidLike = response.data.children[i].data.ups;
-
-            elementvidTitle = document.getElementById('vidTitle');
-            elementvidAuthor = document.getElementById('vidAuthor');
-            elementvidLike = document.getElementById('vidLike');
-            elementvidAuthor.innerHTML = vidAuthor + " : ";
-            elementvidTitle.innerHTML = vidTitle;
-            elementvidLike.innerHTML = "Upvotes : " + vidLike;
-            // Adding OriginalPost link attached to Upvotes  --------------------------------------
-            vidLikeHref = document.getElementById('vidLikeHref');
-            vidLikeHref.href = "https://www.reddit.com/"+originalPostvid;
+                let video = response.data.children[i].data.media.reddit_video.fallback_url;
+                let originalPostvid = response.data.children[i].data.permalink;
+                postId = response.data.children[i].data.id;
 
 
-            // Adding memeNo buttons ------>
-            memeElement = document.getElementById('memeNo');
-            memeElement.innerHTML = 'MEME NO : ' + i;
+                audio = video.slice(0, 37) + "audio.mp4";
 
-            // Changing CurrentSubreddit if subreddit is changed in this request after showing video------------
-            currentSubreddit = subreddit;
-            currenti = i;
-            redditName = document.getElementById('redditName');
-            redditName.innerHTML = "r/" + currentSubreddit;
+                vd = document.getElementById('ck');
+                source = document.getElementById('jp');
+                source.setAttribute('src', video);
+                au = document.getElementById('au');
+                source = document.getElementById('ausrc');
+                source.setAttribute('src', audio);
+                vd.load();
+                au.load();
+                // Removing Loading Icon after loading Video----------------------------------
+                loadGif.src = '';
+                loadGif.style.height = '0px';
+                loadGif.style.width = '0px';
+
+                // Linking AudioPlayback with Video---------------------------------
+                vd.onpause = () => au.pause();
+                vd.onplay = () => au.play();
+                mut = document.getElementById('mut');
+
+                // Adding Likes and Title and Author for vdieo:--------------------------------------------
+                let vidAuthor = response.data.children[i].data.author;
+                let vidTitle = response.data.children[i].data.title;
+                let vidLike = response.data.children[i].data.ups;
+
+                elementvidTitle = document.getElementById('vidTitle');
+                elementvidAuthor = document.getElementById('vidAuthor');
+                elementvidLike = document.getElementById('vidLike');
+                elementvidAuthor.innerHTML = vidAuthor + " : ";
+                elementvidTitle.innerHTML = vidTitle;
+                elementvidLike.innerHTML = "Upvotes : " + vidLike;
+                // Adding OriginalPost link attached to Upvotes  --------------------------------------
+                vidLikeHref = document.getElementById('vidLikeHref');
+                vidLikeHref.href = "https://www.reddit.com/" + originalPostvid;
+
+
+                // Adding memeNo buttons ------>
+                memeElement = document.getElementById('memeNo');
+                memeElement.innerHTML = 'memeNo: '+ i;
+
+
+                // Changing CurrentSubreddit if subreddit is changed in this request after showing video------------
+                currentSubreddit = subreddit;
+                currenti = i;
+                redditName = document.getElementById('redditName');
+                redditName.innerHTML = "r/" + currentSubreddit;
+            } else {
+
+                let imgUrl = response.data.children[i].data.url;
+                let originalPostimg = response.data.children[i].data.permalink;
+                postId = response.data.children[i].data.id;
+
+                // Making html to show Images,Likes, Author and Title-------------------------------------------------------------------------------
+                imageDiv = document.getElementById('imageDiv');
+
+                imageDiv.innerHTML = "<h5 class ='imgHr'>Images will be shown Here</h5><hr><img src ='' id ='imge' class = 'imge' alt ='Loading Error or Image not Found'><div class='imgAaT' id='imgAaT'><span class='imgAuthor' id='imgAuthor'></span><span class='imgTitle' id='imgTitle'></span></div><div class='imgBtns'><a href='' id='imgLikeHref' class='imgLikeHref' target='_blank'><button class='imgLike' id='imgLike'></button></a></div>"
+
+                imge = document.getElementById('imge');
+                imge.src = imgUrl;
+
+                // Adding Likes and Title, Author for Img:--------------------------------------------
+                let imgAuthor = response.data.children[i].data.author;
+                let imgTitle = response.data.children[i].data.title;
+                let imgLike = response.data.children[i].data.ups;
+
+
+                elementimgTitle = document.getElementById('imgTitle');
+                elementimgAuthor = document.getElementById('imgAuthor');
+                elementimgLike = document.getElementById('imgLike');
+                elementimgAuthor.innerHTML = imgAuthor + " : ";
+                elementimgTitle.innerHTML = imgTitle;
+                elementimgLike.innerHTML = "Upvotes : " + imgLike;
+                // Adding OriginalPost link attached to Upvotes in img --------------------------------------
+                imgLikeHref = document.getElementById('imgLikeHref');
+                imgLikeHref.href = "https://www.reddit.com/" + originalPostimg;
+
+
+
+                // Adding memeNo buttons ------>
+                memeElement = document.getElementById('memeNo');
+                memeElement.innerHTML = 'memeNo: '+ i;
+
+
+                // Changing currentSubreddit if changed after showing image-----------------------------
+                currentSubreddit = subreddit;
+                currenti = i;
+                redditName = document.getElementById('redditName');
+                redditName.innerHTML = "r/" + currentSubreddit;
+
+                r = true;
+
+                // Removing Loading icon ---------------------------------------------------
+                loadGif.src = '';
+                loadGif.style.height = '0px';
+                loadGif.style.width = '0px';
+
+            }
+
         }
         ).catch(err => {
-            // console.error('Video not found at '+i);
-            getImg();
-
-        })
-
-}
-
-
-
-function getImg() {
-    // Adding Loading Icon -----------------------------
-    loadGif.src = 'loadingIcon.gif';
-    loadGif.style.height = '15px';
-    loadGif.style.width = '15px';
-
-    fetch(apiUrl, { method: 'GET' }).then(response => response.json()).
-        then(response => {
-
-            let imgUrl = response.data.children[i].data.url;
-            let originalPostimg = response.data.children[i].data.permalink;
-            //  console.log(Img);
-
-
-            // Making html to show Images,Likes, Author and Title-------------------------------------------------------------------------------
-            imageDiv = document.getElementById('imageDiv');
-
-            imageDiv.innerHTML = "<h5 class ='imgHr'>Images will be shown Here</h5><hr><img src ='' id ='imge' class = 'imge' alt ='Loading Error or Image not Found'><div class='imgAaT' id='imgAaT'><span class='imgAuthor' id='imgAuthor'></span><span class='imgTitle' id='imgTitle'></span></div><div class='imgBtns'><a href='' id='imgLikeHref' class='imgLikeHref' target='_blank'><button class='imgLike' id='imgLike'></button></a></div>"
-
-            imge = document.getElementById('imge');
-            imge.src = imgUrl;
-
-            // Adding Likes and Title, Author for Img:--------------------------------------------
-            let imgAuthor = response.data.children[i].data.author;
-            let imgTitle = response.data.children[i].data.title;
-            let imgLike = response.data.children[i].data.ups;
-
-
-            elementimgTitle = document.getElementById('imgTitle');
-            elementimgAuthor = document.getElementById('imgAuthor');
-            elementimgLike = document.getElementById('imgLike');
-            elementimgAuthor.innerHTML = imgAuthor + " : ";
-            elementimgTitle.innerHTML = imgTitle;
-            elementimgLike.innerHTML = "Upvotes : " + imgLike;
-             // Adding OriginalPost link attached to Upvotes in img --------------------------------------
-             imgLikeHref = document.getElementById('imgLikeHref');
-             imgLikeHref.href = "https://www.reddit.com/"+originalPostimg;
-
-
-
-            // Adding memeNo buttons ------>
-            memeElement = document.getElementById('memeNo');
-            memeElement.innerHTML = 'MEME NO : ' + i;
-
-
-            // Changing currentSubreddit if changed after showing image-----------------------------
-            currentSubreddit = subreddit;
-            currenti = i;
-            redditName = document.getElementById('redditName');
-            redditName.innerHTML = "r/" + currentSubreddit;
-
-            r = true;
-
-            // Removing Loading icon ---------------------------------------------------
-            loadGif.src = '';
-            loadGif.style.height = '0px';
-            loadGif.style.width = '0px';
-
-        }
-        ).catch(error => {
-            console.error("nahi chala " + error)
-
-            subreddit =  currentSubreddit;
+            console.error(err);
+            alert('Subreddit Not Found or Some Other Error')
+            subreddit = currentSubreddit;
             i = currenti;
-            redditName.innerHTML = "r/" +currentSubreddit;
+            redditName.innerHTML = "r/" + currentSubreddit;
             loadGif.src = '';
             loadGif.style.height = '0px';
             loadGif.style.width = '0px';
-        })
+       })
 
 }
-
-
-
-getVideo();
 
 //  ------------------------------Mute Button--------------------------------------
 let M = false;
@@ -187,14 +208,12 @@ function playPause() {
 }
 
 
-
-
 function changeVol(newVal) {
     au.volume = newVal;
 
 }
 
-
+// Adding Next button scipt----------------------------->
 
 function clickedNxt() {
     i = i + 1;
@@ -232,6 +251,7 @@ frm.addEventListener('submit', function (event) {
     var inpt = document.getElementById("inpt").value;
     subreddit = String(inpt);
     i = 0;
+    frm.reset();
     getVideo();
 })
 
@@ -239,7 +259,15 @@ frm.addEventListener('submit', function (event) {
 var frm2 = document.getElementById("form2");
 frm2.addEventListener('submit', function (event) {
     event.preventDefault() //prevents from auto submitting
-    var inptNo = document.getElementById("inptNo").value;
+    inptNo = document.getElementById("inptNo").value;
     i = parseInt(inptNo);
+    frm2.reset();
     getVideo();
 })
+
+
+function shareIt() {
+    originUrl = window.location.origin;
+    sitePathUrl = window.location.pathname;
+    window.prompt(`Copy and Share this Url with Others :`, `${originUrl}` + `${sitePathUrl}` + `?reddit=${currentSubreddit}&id=${postId}`);
+}
