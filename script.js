@@ -7,12 +7,13 @@ let currentSubreddit = 'dankindianmemes'
 let subreddit = 'dankindianmemes';
 var sharedPostId;
 var postId;
+var video;
 
 // Variable r is used to detect whether the image content is loading for the first time or it has alread loaded once .If it is already loaded once then we use 'replaceChild' rather than 'appendChild';
 
 let r = false;
 // -----------------------------------------------------------------------------------------------
-// Getting URL details  in javascript :-------
+// Getting URL details  in javascript :-----------------------------------------------------------
 getUrlParams();
 
 function getUrlParams() {
@@ -43,7 +44,7 @@ function getUrlParams() {
 function getVideo() {
     apiUrl = `https://www.reddit.com/r/${subreddit}.json?limit=100`;
 
-    // Adding Loading icon before using Fetch call----------------------------
+    // Adding Loading icon before using Fetch call----------------------------------------
     loadGif = document.getElementById('loadingGif');
     loadGif.src = 'loadingIcon.gif';
     loadGif.style.height = '15px';
@@ -59,11 +60,36 @@ function getVideo() {
             }
             // Changing the URL query to empty so that the URL looks clean :--------------->
             window.history.pushState({}, '', window.location.pathname);
+            isOriginalContent='';
+
+            // getting info whether content is shared from some other subreddit or original------->
+            checkCrossPost = response.data.children[i].data.crosspost_parent_list;
+            if (checkCrossPost == undefined) {
+                isOriginalContent = true;
+            } else {
+                isOriginalContent = false;
+            }
             // --------       --Getting info about the type o content -------------------------->
             contentTypeVideo = response.data.children[i].data.is_video;
+            // -----------------------------------------------------------------------------------------------------------
+            if (isOriginalContent == false) {
+
+                isOriginalContentVideo = response.data.children[i].data.crosspost_parent_list[0].is_video;
+                if (isOriginalContentVideo == true) {
+                    video = response.data.children[i].data.crosspost_parent_list[0].media.reddit_video.fallback_url;
+                    contentTypeVideo = true;
+                } else {
+                    let imgUrl = response.data.children[i].data.crosspost_parent_list[0].url;
+                    contentTypeVideo = false;
+                }
+            }
+            // ------------------------------------------------------------------------------------------------------
             if (contentTypeVideo == true) {
 
-                let video = response.data.children[i].data.media.reddit_video.fallback_url;
+                if (isOriginalContent == true) {
+                    video = response.data.children[i].data.media.reddit_video.fallback_url;
+                };
+
                 let originalPostvid = response.data.children[i].data.permalink;
                 postId = response.data.children[i].data.id;
 
@@ -106,7 +132,7 @@ function getVideo() {
 
                 // Adding memeNo buttons ------>
                 memeElement = document.getElementById('memeNo');
-                memeElement.innerHTML = 'memeNo: '+ i;
+                memeElement.innerHTML = 'memeNo: ' + i;
 
 
                 // Changing CurrentSubreddit if subreddit is changed in this request after showing video------------
@@ -116,7 +142,9 @@ function getVideo() {
                 redditName.innerHTML = "r/" + currentSubreddit;
             } else {
 
-                let imgUrl = response.data.children[i].data.url;
+                if (isOriginalContent == true) {
+                    imgUrl = response.data.children[i].data.url;
+                };
                 let originalPostimg = response.data.children[i].data.permalink;
                 postId = response.data.children[i].data.id;
 
@@ -148,7 +176,7 @@ function getVideo() {
 
                 // Adding memeNo buttons ------>
                 memeElement = document.getElementById('memeNo');
-                memeElement.innerHTML = 'memeNo: '+ i;
+                memeElement.innerHTML = 'memeNo: ' + i;
 
 
                 // Changing currentSubreddit if changed after showing image-----------------------------
@@ -176,7 +204,7 @@ function getVideo() {
             loadGif.src = '';
             loadGif.style.height = '0px';
             loadGif.style.width = '0px';
-       })
+        })
 
 }
 
