@@ -79,7 +79,7 @@ function getVideo() {
                     video = response.data.children[i].data.crosspost_parent_list[0].media.reddit_video.fallback_url;
                     contentTypeVideo = true;
                 } else {
-                    let imgUrl = response.data.children[i].data.crosspost_parent_list[0].url;
+                     imgUrl = response.data.children[i].data.crosspost_parent_list[0].url;
                     contentTypeVideo = false;
                 }
             }
@@ -144,6 +144,7 @@ function getVideo() {
 
                 if (isOriginalContent == true) {
                     imgUrl = response.data.children[i].data.url;
+                    console.log('got Url :'+ imgUrl);
                 };
                 let originalPostimg = response.data.children[i].data.permalink;
                 postId = response.data.children[i].data.id;
