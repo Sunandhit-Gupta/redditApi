@@ -27,6 +27,12 @@
     width: 40vw;
     background-color: black;
 } 
+.ytPlayer{
+    margin-top: 4px;
+    height: 60vh;
+    width: 40vw;
+    background-color: black;
+}
 
 .vidAuthor{
     color: grey;
