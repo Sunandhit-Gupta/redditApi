@@ -3,8 +3,8 @@ let i = 0;
 // K variabe is made so that the sharedPostId condition to search from url ,works only once and donot work after clicking next button again ------------
 let k = 0;
 let currenti = 0;
-let currentSubreddit = 'india'
-let subreddit = 'india';
+let currentSubreddit = 'r/india'
+let subreddit = 'r/india';
 var sharedPostId;
 var postId;
 var video;
@@ -43,7 +43,7 @@ function getUrlParams() {
 // ---------------------------------------------------------------------------------------
 
 function getVideo() {
-    apiUrl = `https://www.reddit.com/r/${subreddit}.json?limit=100`;
+    apiUrl = `https://www.reddit.com/${subreddit}.json?limit=100`;
 
     // Adding Loading icon before using Fetch call----------------------------------------
     loadGif = document.getElementById('loadingGif');
@@ -152,7 +152,7 @@ function getVideo() {
                 currentSubreddit = subreddit;
                 currenti = i;
                 redditName = document.getElementById('redditName');
-                redditName.innerHTML = "r/" + currentSubreddit;
+                redditName.innerHTML = currentSubreddit;
 
                 // making ytUsed variabe false:--------
                 ytUsed = false;
@@ -218,7 +218,7 @@ function getVideo() {
                 currentSubreddit = subreddit;
                 currenti = i;
                 redditName = document.getElementById('redditName');
-                redditName.innerHTML = "r/" + currentSubreddit;
+                redditName.innerHTML = currentSubreddit;
 
                 // making ytUsed variable True:---
                 ytUsed = true;
@@ -270,7 +270,7 @@ function getVideo() {
                 currentSubreddit = subreddit;
                 currenti = i;
                 redditName = document.getElementById('redditName');
-                redditName.innerHTML = "r/" + currentSubreddit;
+                redditName.innerHTML =  currentSubreddit;
 
                 r = true;
 
@@ -322,7 +322,7 @@ function getVideo() {
                 currentSubreddit = subreddit;
                 currenti = i;
                 redditName = document.getElementById('redditName');
-                redditName.innerHTML = "r/" + currentSubreddit;
+                redditName.innerHTML =  currentSubreddit;
 
                 r = true;
 
@@ -341,7 +341,7 @@ function getVideo() {
             alert('Subreddit Not Found or Some Other Error')
             subreddit = currentSubreddit;
             i = currenti;
-            redditName.innerHTML = "r/" + currentSubreddit;
+            redditName.innerHTML = currentSubreddit;
             loadGif.src = '';
             loadGif.style.height = '0px';
             loadGif.style.width = '0px';
