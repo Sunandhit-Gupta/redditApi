@@ -3,8 +3,8 @@ let i = 0;
 // K variabe is made so that the sharedPostId condition to search from url ,works only once and donot work after clicking next button again ------------
 let k = 0;
 let currenti = 0;
-let currentSubreddit = 'r/india'
-let subreddit = 'r/india';
+let currentSubreddit = 'india'
+let subreddit = 'india';
 var sharedPostId;
 var postId;
 var video;
@@ -43,7 +43,8 @@ function getUrlParams() {
 // ---------------------------------------------------------------------------------------
 
 function getVideo() {
-    apiUrl = `https://www.reddit.com/${subreddit}.json?limit=100`;
+    apiUrl = `https://www.reddit.com/r/${subreddit}.json?limit=100`;
+    console.log(apiUrl);
 
     // Adding Loading icon before using Fetch call----------------------------------------
     loadGif = document.getElementById('loadingGif');
@@ -53,6 +54,7 @@ function getVideo() {
 
     fetch(apiUrl, { method: 'GET' }).then(response => response.json()).
         then(response => {
+            console.log(response);
             // K value is used to ensure that this "if" statement works only once .
             if (sharedPostId != null && k == 0) {
                 indexId = response.data.children.findIndex(z => z.data.id === sharedPostId);
@@ -152,7 +154,7 @@ function getVideo() {
                 currentSubreddit = subreddit;
                 currenti = i;
                 redditName = document.getElementById('redditName');
-                redditName.innerHTML = currentSubreddit;
+                redditName.innerHTML = 'r/' +currentSubreddit;
 
                 // making ytUsed variabe false:--------
                 ytUsed = false;
@@ -270,7 +272,7 @@ function getVideo() {
                 currentSubreddit = subreddit;
                 currenti = i;
                 redditName = document.getElementById('redditName');
-                redditName.innerHTML =  currentSubreddit;
+                redditName.innerHTML = 'r/'+ currentSubreddit;
 
                 r = true;
 
@@ -341,7 +343,7 @@ function getVideo() {
             alert('Subreddit Not Found or Some Other Error')
             subreddit = currentSubreddit;
             i = currenti;
-            redditName.innerHTML = currentSubreddit;
+            redditName.innerHTML ='r/'+ currentSubreddit;
             loadGif.src = '';
             loadGif.style.height = '0px';
             loadGif.style.width = '0px';
