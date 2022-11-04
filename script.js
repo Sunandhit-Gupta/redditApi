@@ -3,8 +3,8 @@ let i = 0;
 // K variabe is made so that the sharedPostId condition to search from url ,works only once and donot work after clicking next button again ------------
 let k = 0;
 let currenti = 0;
-let currentSubreddit = 'india'
-let subreddit = 'india';
+let currentSubreddit = 'desimemes'
+let subreddit = 'desimemes';
 var sharedPostId;
 var postId;
 var video;
@@ -106,6 +106,7 @@ function getVideo() {
                 };
 
                 let originalPostvid = response.data.children[i].data.permalink;
+                // Getting Post ID :------------------
                 postId = response.data.children[i].data.id;
 
 
