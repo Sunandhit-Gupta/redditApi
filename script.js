@@ -127,6 +127,10 @@ function getVideo() {
                 // Linking AudioPlayback with Video---------------------------------
                 vd.onpause = () => au.pause();
                 vd.onplay = () => au.play();
+                // If with earphone controls we pause audio , video should also pause.
+                au.onpause = () => vd.pause();
+                au.onplay =() => vd.play();
+                
                 mut = document.getElementById('mut');
 
                 // Adding Likes and Title and Author for vdieo:--------------------------------------------
