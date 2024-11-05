@@ -70,10 +70,10 @@ function getVideo() {
 
             is_gallery = response.data.children[i].data.is_gallery;
             console.log(is_gallery);
-           
+
                 domain = response.data.children[i].data.domain;
                 console.log(domain);
-            
+
             if (checkCrossPost == undefined) {
                 isOriginalContent = true;
             } else {
@@ -110,7 +110,7 @@ function getVideo() {
                 postId = response.data.children[i].data.id;
 
 
-                audio = video.slice(0, 37) + "audio.mp4";
+                audio = video.slice(0, 37) + "AUDIO_64.mp4";
 
                 vd = document.getElementById('ck');
                 source = document.getElementById('jp');
@@ -131,7 +131,7 @@ function getVideo() {
                 // If with earphone controls we pause audio , video should also pause.
                 au.onpause = () => vd.pause();
                 au.onplay =() => vd.play();
-                
+
                 mut = document.getElementById('mut');
 
                 // Adding Likes and Title and Author for vdieo:--------------------------------------------
@@ -170,7 +170,7 @@ function getVideo() {
 
                 // made ytLinkInitials to check whether youtube Url has www. in starting or not ------
                 ytLinkInitials = ytLink.slice(8,16);
-        
+
                 if(domain == "youtube.com"){
                     if(ytLinkInitials == "www.yout"){
                 ytVideoId = ytLink.slice(32, 43);}
@@ -237,7 +237,7 @@ function getVideo() {
 
                 if (isOriginalContent == true) {
                     imgUrl = response.data.children[i].data.url;
-                    
+
                 };
                 let originalPostimg = response.data.children[i].data.permalink;
                 postId = response.data.children[i].data.id;
